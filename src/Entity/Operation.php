@@ -116,6 +116,14 @@ class Operation
     protected $security;
 
     /**
+     * @JMS\Since("2.0")
+     * @JMS\Type("array")
+     * @JMS\SerializedName("vendorExtensions")
+     * @var string[]
+     */
+    protected $vendorExtensions;
+
+    /**
      * @return \string[]
      */
     public function getTags()
@@ -329,5 +337,21 @@ class Operation
     {
         $this->security = $security;
         return $this;
+    }
+
+    /**
+     * @return \string[]
+     */
+    public function getVendorExtensions()
+    {
+        return $this->vendorExtensions;
+    }
+
+    /**
+     * @param \string[] $vendorExtensions
+     */
+    public function setVendorExtensions($vendorExtensions)
+    {
+        $this->vendorExtensions = $vendorExtensions;
     }
 }

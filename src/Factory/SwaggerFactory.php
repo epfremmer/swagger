@@ -28,19 +28,27 @@ class SwaggerFactory
      */
     protected $serializer;
 
+
     /**
-     * Constructor
+     * SwaggerFactory constructor.
+     * @param array|null $subscribers
      */
-    public function __construct()
+    public function __construct(array $subscribers = null)
     {
         $serializerBuilder = new SerializerBuilder();
 
-        $serializerBuilder->configureListeners(function(EventDispatcher $eventDispatcher) {
+        $serializerBuilder->configureListeners(function (EventDispatcher $eventDispatcher) use ($subscribers) {
             $eventDispatcher->addSubscriber(new SerializationSubscriber());
+            if (null !== $subscribers) {
+                foreach ($subscribers as $subscriber) {
+                    $eventDispatcher->addSubscriber($subscriber);
+                }
+            }
         });
 
         $this->serializer = $serializerBuilder->build();
     }
+
 
     /**
      * Build Swagger document from parser interface
