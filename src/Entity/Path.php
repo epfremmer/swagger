@@ -30,6 +30,14 @@ class Path
     protected $operations;
 
     /**
+     * @JMS\Since("2.0")
+     * @JMS\Type("array")
+     * @JMS\SerializedName("vendorExtensions")
+     * @var string[]
+     */
+    protected $vendorExtensions;
+
+    /**
      * @return Operation[]|ArrayCollection
      */
     public function getOperations()
@@ -47,4 +55,19 @@ class Path
         return $this;
     }
 
+    /**
+     * @return \string[]
+     */
+    public function getVendorExtensions()
+    {
+        return $this->vendorExtensions;
+    }
+
+    /**
+     * @param \string[] $vendorExtensions
+     */
+    public function setVendorExtensions($vendorExtensions)
+    {
+        $this->vendorExtensions = $vendorExtensions;
+    }
 }
