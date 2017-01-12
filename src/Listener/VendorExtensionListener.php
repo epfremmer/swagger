@@ -1,7 +1,12 @@
 <?php
 namespace Epfremme\Swagger\Listener;
 
+use Epfremme\Swagger\Entity\ExternalDocumentation;
 use Epfremme\Swagger\Entity\Info;
+use Epfremme\Swagger\Entity\License;
+use Epfremme\Swagger\Entity\Operation;
+use Epfremme\Swagger\Entity\Response;
+use Epfremme\Swagger\Entity\Tag;
 use JMS\Serializer\EventDispatcher\Events;
 use JMS\Serializer\EventDispatcher\EventSubscriberInterface;
 use JMS\Serializer\EventDispatcher\ObjectEvent;
@@ -27,11 +32,12 @@ class VendorExtensionListener implements EventSubscriberInterface
      */
     public function onDePreSerialize(PreDeserializeEvent $event)
     {
-        if ($this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Info') ||
-            $this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Response') ||
-            $this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Operation') ||
-            $this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Tag') ||
-            $this->checkExpectedType($event, 'Epfremme\Swagger\Entity\License')
+        if ($this->checkExpectedType($event, Info::class) ||
+            $this->checkExpectedType($event, Response::class) ||
+            $this->checkExpectedType($event, Operation::class) ||
+            $this->checkExpectedType($event, Tag::class) ||
+            $this->checkExpectedType($event, License::class) ||
+            $this->checkExpectedType($event, ExternalDocumentation::class)
         ) {
             $data = $event->getData();
             $data['vendorExtensions'] = [];
