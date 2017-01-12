@@ -7,6 +7,7 @@
 namespace Epfremme\Swagger\Tests\Mixin;
 
 use Epfremme\Swagger\Listener\SerializationSubscriber;
+use Epfremme\Swagger\Listener\VendorExtensionListener;
 use JMS\Serializer\EventDispatcher\EventDispatcher;
 use JMS\Serializer\EventDispatcher\EventSubscriberInterface;
 use JMS\Serializer\EventDispatcher\ObjectEvent;
@@ -39,7 +40,7 @@ trait SerializerContextTrait
 
         $builder->configureListeners(function (EventDispatcher $eventDispatcher) {
             $eventDispatcher->addSubscriber(new SerializationSubscriber());
-            $eventDispatcher->addSubscriber(new MyEventSubscriber());
+            $eventDispatcher->addSubscriber(new VendorExtensionListener());
         });
 
         self::$serializer = $builder->build();
@@ -58,47 +59,4 @@ trait SerializerContextTrait
 
         return self::$serializer;
     }
-}
-
-class MyEventSubscriber implements EventSubscriberInterface
-{
-    public static function getSubscribedEvents()
-    {
-        return array(
-            ['event' => 'serializer.pre_deserialize', 'method' => 'onDePreSerialize'],
-            ['event' => 'serializer.post_serialize', 'method' => 'onPostSerialize'],
-        );
-    }
-
-    public function onDePreSerialize(PreDeserializeEvent $event)
-    {
-        $data = $event->getData();
-        if ('Epfremme\Swagger\Entity\Info' == $event->getType()['name']) {
-
-            $data['vendorExtensions'] = [];
-            foreach ($data as $key => $value) {
-                if (strrpos($key, 'x-') !== false) {
-                    $data['vendorExtensions'][$key] = $value;
-                }
-
-            }
-        }
-        $event->setData($data);
-    }
-
-    public function onPostSerialize(ObjectEvent $event)
-    {
-        $object = $event->getObject();
-        /** @var GenericSerializationVisitor $visitor */
-        $visitor = $event->getVisitor();
-        if(method_exists($object, 'getVendorExtensions')){
-            $vendorExtensions = $object->getVendorExtensions();
-            if($vendorExtensions){
-                foreach($vendorExtensions as $key => $value){
-                    $visitor->setData($key, $value);
-                }
-            }
-        }
-    }
-
 }
