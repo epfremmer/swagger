@@ -6,6 +6,7 @@
  */
 namespace Epfremme\Swagger\Entity;
 
+use Epfremme\Swagger\Entity\Mixin\VendorExtensionsTrait;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -16,6 +17,8 @@ use JMS\Serializer\Annotation as JMS;
  */
 class Info
 {
+    use VendorExtensionsTrait;
+
     /**
      * @JMS\Since("2.0")
      * @JMS\Type("string")
@@ -63,15 +66,6 @@ class Info
      * @var string
      */
     protected $version;
-
-    /**
-     * @JMS\Since("2.0")
-     * @JMS\Type("array")
-     * @JMS\SerializedName("vendorExtensions")
-     * @JMS\Accessor(getter="getVendorExtensionNull")
-     * @var string[]
-     */
-    protected $vendorExtensions;
 
     /**
      * @return string
@@ -178,33 +172,6 @@ class Info
     public function setVersion($version)
     {
         $this->version = $version;
-        return $this;
-    }
-
-    /**
-     * @return \string[]
-     */
-    public function getVendorExtensions()
-    {
-        return $this->vendorExtensions;
-    }
-
-    /**
-     * This method exists to filter out this field when serializinggit st
-     * @return null
-     */
-    public function getVendorExtensionNull()
-    {
-        return null;
-    }
-
-    /**
-     * @param \string[] $vendorExtensions
-     * @return Info
-     */
-    public function setVendorExtensions($vendorExtensions)
-    {
-        $this->vendorExtensions = $vendorExtensions;
         return $this;
     }
 }
