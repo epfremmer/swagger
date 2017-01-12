@@ -6,6 +6,7 @@
  */
 namespace Epfremme\Swagger\Entity;
 
+use Epfremme\Swagger\Entity\Mixin\VendorExtensionsTrait;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -16,6 +17,8 @@ use JMS\Serializer\Annotation as JMS;
  */
 class Tag
 {
+    use VendorExtensionsTrait;
+
     /**
      * @JMS\Since("2.0")
      * @JMS\Type("string")
@@ -39,14 +42,6 @@ class Tag
      * @var ExternalDocumentation
      */
     protected $externalDocs;
-
-    /**
-     * @JMS\Since("2.0")
-     * @JMS\Type("array")
-     * @JMS\SerializedName("vendorExtensions")
-     * @var string[]
-     */
-    protected $vendorExtensions;
 
     /**
      * @return string
@@ -102,19 +97,4 @@ class Tag
         return $this;
     }
 
-    /**
-     * @return \string[]
-     */
-    public function getVendorExtensions()
-    {
-        return $this->vendorExtensions;
-    }
-
-    /**
-     * @param \string[] $vendorExtensions
-     */
-    public function setVendorExtensions($vendorExtensions)
-    {
-        $this->vendorExtensions = $vendorExtensions;
-    }
 }

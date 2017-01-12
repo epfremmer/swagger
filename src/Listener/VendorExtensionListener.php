@@ -29,7 +29,8 @@ class VendorExtensionListener implements EventSubscriberInterface
     {
         if ($this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Info') ||
             $this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Response') ||
-            $this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Operation')
+            $this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Operation') ||
+            $this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Tag')
         ) {
             $data = $event->getData();
             $data['vendorExtensions'] = [];
