@@ -21,6 +21,11 @@ class ArrayHeader extends AbstractHeader
     /**
      * {@inheritdoc}
      */
+    protected $type = AbstractHeader::ARRAY_TYPE;
+
+    /**
+     * {@inheritdoc}
+     */
     public function getType()
     {
         return AbstractHeader::ARRAY_TYPE;
