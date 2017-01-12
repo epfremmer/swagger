@@ -68,6 +68,7 @@ class Info
      * @JMS\Since("2.0")
      * @JMS\Type("array")
      * @JMS\SerializedName("vendorExtensions")
+     * @JMS\Accessor(getter="getVendorExtensionNull")
      * @var string[]
      */
     protected $vendorExtensions;
@@ -189,10 +190,21 @@ class Info
     }
 
     /**
+     * This method exists to filter out this field when serializinggit st
+     * @return null
+     */
+    public function getVendorExtensionNull()
+    {
+        return null;
+    }
+
+    /**
      * @param \string[] $vendorExtensions
+     * @return Info
      */
     public function setVendorExtensions($vendorExtensions)
     {
         $this->vendorExtensions = $vendorExtensions;
+        return $this;
     }
 }
