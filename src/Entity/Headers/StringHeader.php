@@ -7,6 +7,7 @@
 namespace Epfremme\Swagger\Entity\Headers;
 
 use Epfremme\Swagger\Entity\Mixin\Primitives;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class StringHeader
@@ -19,7 +20,10 @@ class StringHeader extends AbstractHeader
     use Primitives\StringPrimitiveTrait;
 
     /**
-     * {@inheritdoc}
+     * @JMS\Since("2.0")
+     * @JMS\Type("string")
+     * @JMS\SerializedName("type")
+     * @var string
      */
     protected $type = AbstractHeader::STRING_TYPE;
 
