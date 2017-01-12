@@ -15,10 +15,10 @@ class VendorExtensionListener implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             ['event' => Events::PRE_DESERIALIZE, 'method' => 'onDePreSerialize'],
             ['event' => Events::POST_SERIALIZE, 'method' => 'onPostSerialize'],
-        );
+        ];
     }
 
     /**
@@ -31,8 +31,9 @@ class VendorExtensionListener implements EventSubscriberInterface
 
             $data['vendorExtensions'] = [];
             foreach ($data as $key => $value) {
-                if (strrpos($key, 'x-') !== false) {
+                if ($this->isVendorExtensionField($key)) {
                     $data['vendorExtensions'][$key] = $value;
+                    unset($data[$key]);
                 }
 
             }
@@ -48,14 +49,23 @@ class VendorExtensionListener implements EventSubscriberInterface
         $object = $event->getObject();
         /** @var GenericSerializationVisitor $visitor */
         $visitor = $event->getVisitor();
-        if(method_exists($object, 'getVendorExtensions')){
+        if (method_exists($object, 'getVendorExtensions')) {
             $vendorExtensions = $object->getVendorExtensions();
-            if($vendorExtensions){
-                foreach($vendorExtensions as $key => $value){
+            if ($vendorExtensions) {
+                foreach ($vendorExtensions as $key => $value) {
                     $visitor->setData($key, $value);
                 }
             }
         }
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    private function isVendorExtensionField($key)
+    {
+        return strrpos($key, 'x-') !== false;
     }
 
 }
