@@ -21,6 +21,11 @@ class NumberHeader extends AbstractHeader
     /**
      * {@inheritdoc}
      */
+    protected $type = AbstractHeader::NUMBER_TYPE;
+
+    /**
+     * {@inheritdoc}
+     */
     public function getType()
     {
         return AbstractHeader::NUMBER_TYPE;

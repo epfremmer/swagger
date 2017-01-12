@@ -21,6 +21,11 @@ class StringHeader extends AbstractHeader
     /**
      * {@inheritdoc}
      */
+    protected $type = AbstractHeader::STRING_TYPE;
+
+    /**
+     * {@inheritdoc}
+     */
     public function getType()
     {
         return AbstractHeader::STRING_TYPE;

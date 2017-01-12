@@ -22,6 +22,11 @@ class BooleanHeader extends AbstractHeader
     /**
      * {@inheritdoc}
      */
+    protected $type = AbstractHeader::BOOLEAN_TYPE;
+
+    /**
+     * {@inheritdoc}
+     */
     public function getType()
     {
         return AbstractHeader::BOOLEAN_TYPE;
