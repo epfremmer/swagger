@@ -27,10 +27,10 @@ class VendorExtensionListener implements EventSubscriberInterface
      */
     public function onDePreSerialize(PreDeserializeEvent $event)
     {
-        $data = $event->getData();
         if ($this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Info') ||
             $this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Operation')
         ) {
+            $data = $event->getData();
             $data['vendorExtensions'] = [];
             foreach ($data as $key => $value) {
                 if ($this->isVendorExtensionField($key)) {
@@ -38,8 +38,22 @@ class VendorExtensionListener implements EventSubscriberInterface
                     unset($data[$key]);
                 }
             }
+            $event->setData($data);
         }
-        $event->setData($data);
+        if ($this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Path')
+        ) {
+            $outerData = $event->getData();
+            $data = $outerData['data'];
+            $outerData['vendorExtensions'] = [];
+            foreach ($data as $key => $value) {
+                if ($this->isVendorExtensionField($key)) {
+                    $outerData['vendorExtensions'][$key] = $value;
+                    unset($outerData['data'][$key]);
+                }
+            }
+            $event->setData($outerData);
+        }
+
     }
 
     /**

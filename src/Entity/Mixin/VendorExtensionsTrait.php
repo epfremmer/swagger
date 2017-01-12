@@ -37,7 +37,7 @@ trait VendorExtensionsTrait
 
     /**
      * @param \string[] $vendorExtensions
-     * @return Info
+     * @return mixed
      */
     public function setVendorExtensions($vendorExtensions)
     {
