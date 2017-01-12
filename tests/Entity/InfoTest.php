@@ -113,8 +113,8 @@ class InfoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Epfremme\Swagger\Entity\Info::getVersion
-     * @covers Epfremme\Swagger\Entity\Info::setVersion
+     * @covers Epfremme\Swagger\Entity\Info::getVendorExtensions
+     * @covers Epfremme\Swagger\Entity\Info::setVendorExtensions
      */
     public function testVendorExtension()
     {

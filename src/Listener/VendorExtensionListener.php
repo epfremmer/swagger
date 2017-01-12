@@ -1,6 +1,7 @@
 <?php
 namespace Epfremme\Swagger\Listener;
 
+use Epfremme\Swagger\Entity\Info;
 use JMS\Serializer\EventDispatcher\Events;
 use JMS\Serializer\EventDispatcher\EventSubscriberInterface;
 use JMS\Serializer\EventDispatcher\ObjectEvent;
@@ -27,15 +28,15 @@ class VendorExtensionListener implements EventSubscriberInterface
     public function onDePreSerialize(PreDeserializeEvent $event)
     {
         $data = $event->getData();
-        if ('Epfremme\Swagger\Entity\Info' == $event->getType()['name']) {
-
+        if ($this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Info') ||
+            $this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Operation')
+        ) {
             $data['vendorExtensions'] = [];
             foreach ($data as $key => $value) {
                 if ($this->isVendorExtensionField($key)) {
                     $data['vendorExtensions'][$key] = $value;
                     unset($data[$key]);
                 }
-
             }
         }
         $event->setData($data);
@@ -66,6 +67,16 @@ class VendorExtensionListener implements EventSubscriberInterface
     private function isVendorExtensionField($key)
     {
         return strrpos($key, 'x-') !== false;
+    }
+
+    /**
+     * @param PreDeserializeEvent $event
+     * @param $expectedType
+     * @return bool
+     */
+    private function checkExpectedType(PreDeserializeEvent $event, $expectedType)
+    {
+        return $expectedType == $event->getType()['name'];
     }
 
 }
