@@ -7,6 +7,7 @@
 namespace Epfremme\Swagger\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Epfremme\Swagger\Entity\Mixin\VendorExtensionsTrait;
 use Epfremme\Swagger\Entity\Schemas\SchemaInterface;
 use Epfremme\Swagger\Entity\Headers\AbstractHeader;
 use JMS\Serializer\Annotation as JMS;
@@ -19,6 +20,8 @@ use JMS\Serializer\Annotation as JMS;
  */
 class Response
 {
+    use VendorExtensionsTrait;
+
     /**
      * @JMS\Since("2.0")
      * @JMS\Type("string")
@@ -50,14 +53,6 @@ class Response
      * @var string
      */
     protected $examples;
-
-    /**
-     * @JMS\Since("2.0")
-     * @JMS\Type("array")
-     * @JMS\SerializedName("vendorExtensions")
-     * @var string[]
-     */
-    protected $vendorExtensions;
 
     /**
      * @return string
@@ -129,21 +124,5 @@ class Response
     {
         $this->examples = $examples;
         return $this;
-    }
-
-    /**
-     * @return \string[]
-     */
-    public function getVendorExtensions()
-    {
-        return $this->vendorExtensions;
-    }
-
-    /**
-     * @param \string[] $vendorExtensions
-     */
-    public function setVendorExtensions($vendorExtensions)
-    {
-        $this->vendorExtensions = $vendorExtensions;
     }
 }

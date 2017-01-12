@@ -28,6 +28,7 @@ class VendorExtensionListener implements EventSubscriberInterface
     public function onDePreSerialize(PreDeserializeEvent $event)
     {
         if ($this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Info') ||
+            $this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Response') ||
             $this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Operation')
         ) {
             $data = $event->getData();
