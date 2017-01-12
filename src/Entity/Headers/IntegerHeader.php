@@ -21,6 +21,11 @@ class IntegerHeader extends AbstractHeader
     /**
      * {@inheritdoc}
      */
+    protected $type = AbstractHeader::INTEGER_TYPE;
+
+    /**
+     * {@inheritdoc}
+     */
     public function getType()
     {
         return AbstractHeader::INTEGER_TYPE;
