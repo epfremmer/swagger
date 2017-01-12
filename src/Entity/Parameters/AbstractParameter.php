@@ -7,6 +7,7 @@
 namespace Epfremme\Swagger\Entity\Parameters;
 
 use Epfremme\Swagger\Annotations as EP;
+use Epfremme\Swagger\Entity\Mixin\VendorExtensionsTrait;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -40,6 +41,8 @@ use JMS\Serializer\Annotation as JMS;
  */
 abstract class AbstractParameter
 {
+    use VendorExtensionsTrait;
+
     // parameter in constants
     const IN_BODY      = 'body';
     const IN_PATH      = 'path';
@@ -78,14 +81,6 @@ abstract class AbstractParameter
      * @var boolean
      */
     protected $required;
-
-    /**
-     * @JMS\Since("2.0")
-     * @JMS\Type("array")
-     * @JMS\SerializedName("vendorExtensions")
-     * @var string[]
-     */
-    protected $vendorExtensions;
 
     /**
      * @return string
@@ -157,21 +152,5 @@ abstract class AbstractParameter
     {
         $this->required = $required;
         return $this;
-    }
-
-    /**
-     * @return \string[]
-     */
-    public function getVendorExtensions()
-    {
-        return $this->vendorExtensions;
-    }
-
-    /**
-     * @param \string[] $vendorExtensions
-     */
-    public function setVendorExtensions($vendorExtensions)
-    {
-        $this->vendorExtensions = $vendorExtensions;
     }
 }
