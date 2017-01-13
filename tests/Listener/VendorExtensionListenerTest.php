@@ -31,6 +31,7 @@ use Epfremme\Swagger\Entity\Tag;
 use Epfremme\Swagger\Listener\VendorExtensionListener;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\EventDispatcher\Events;
+use JMS\Serializer\EventDispatcher\ObjectEvent;
 use JMS\Serializer\EventDispatcher\PreDeserializeEvent;
 
 

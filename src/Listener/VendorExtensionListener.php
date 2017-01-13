@@ -24,6 +24,9 @@ use JMS\Serializer\GenericSerializationVisitor;
  */
 class VendorExtensionListener implements EventSubscriberInterface
 {
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -48,28 +51,11 @@ class VendorExtensionListener implements EventSubscriberInterface
             $this->checkTypeParent($event, AbstractSchema::class) ||
             $this->checkTypeParent($event, AbstractHeader::class)
         ) {
-            $data = $event->getData();
-            $data['vendorExtensions'] = [];
-            foreach ($data as $key => $value) {
-                if ($this->isVendorExtensionField($key)) {
-                    $data['vendorExtensions'][$key] = $value;
-                    unset($data[$key]);
-                }
-            }
-            $event->setData($data);
+            $this->updateDeSerializedData($event);
         }
         if ($this->checkExpectedType($event, Path::class)
         ) {
-            $outerData = $event->getData();
-            $data = $outerData['data'];
-            $outerData['vendorExtensions'] = [];
-            foreach ($data as $key => $value) {
-                if ($this->isVendorExtensionField($key)) {
-                    $outerData['vendorExtensions'][$key] = $value;
-                    unset($outerData['data'][$key]);
-                }
-            }
-            $event->setData($outerData);
+            $this->updateDeSerializedPathData($event);
         }
 
     }
@@ -119,6 +105,39 @@ class VendorExtensionListener implements EventSubscriberInterface
     private function checkTypeParent(PreDeserializeEvent $event, $parentClass)
     {
         return is_subclass_of($event->getType()['name'], $parentClass);
+    }
+
+    /**
+     * @param PreDeserializeEvent $event
+     */
+    private function updateDeSerializedData(PreDeserializeEvent $event)
+    {
+        $data = $event->getData();
+        $data['vendorExtensions'] = [];
+        foreach ($data as $key => $value) {
+            if ($this->isVendorExtensionField($key)) {
+                $data['vendorExtensions'][$key] = $value;
+                unset($data[$key]);
+            }
+        }
+        $event->setData($data);
+    }
+
+    /**
+     * @param PreDeserializeEvent $event
+     */
+    private function updateDeSerializedPathData(PreDeserializeEvent $event)
+    {
+        $outerData = $event->getData();
+        $data = $outerData['data'];
+        $outerData['vendorExtensions'] = [];
+        foreach ($data as $key => $value) {
+            if ($this->isVendorExtensionField($key)) {
+                $outerData['vendorExtensions'][$key] = $value;
+                unset($outerData['data'][$key]);
+            }
+        }
+        $event->setData($outerData);
     }
 
 }
