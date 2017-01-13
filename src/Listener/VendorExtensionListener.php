@@ -11,8 +11,11 @@ use Epfremme\Swagger\Entity\Headers\StringHeader;
 use Epfremme\Swagger\Entity\Info;
 use Epfremme\Swagger\Entity\License;
 use Epfremme\Swagger\Entity\Operation;
+use Epfremme\Swagger\Entity\Parameters\AbstractParameter;
+use Epfremme\Swagger\Entity\Parameters\BodyParameter;
 use Epfremme\Swagger\Entity\Path;
 use Epfremme\Swagger\Entity\Response;
+use Epfremme\Swagger\Entity\Schemas\AbstractSchema;
 use Epfremme\Swagger\Entity\Schemas\ArraySchema;
 use Epfremme\Swagger\Entity\Schemas\BooleanSchema;
 use Epfremme\Swagger\Entity\Schemas\IntegerSchema;
@@ -55,21 +58,10 @@ class VendorExtensionListener implements EventSubscriberInterface
             $this->checkExpectedType($event, Tag::class) ||
             $this->checkExpectedType($event, License::class) ||
             $this->checkExpectedType($event, ExternalDocumentation::class) ||
-            $this->checkExpectedType($event, ArrayHeader::class) ||
-            $this->checkExpectedType($event, BooleanHeader::class) ||
-            $this->checkExpectedType($event, IntegerHeader::class) ||
-            $this->checkExpectedType($event, NumberHeader::class) ||
-            $this->checkExpectedType($event, StringHeader::class) ||
             $this->checkExpectedType($event, SecurityDefinition::class) ||
-            $this->checkExpectedType($event, ArraySchema::class) ||
-            $this->checkExpectedType($event, BooleanSchema::class) ||
-            $this->checkExpectedType($event, IntegerSchema::class) ||
-            $this->checkExpectedType($event, MultiSchema::class) ||
-            $this->checkExpectedType($event, NullSchema::class) ||
-            $this->checkExpectedType($event, NumberSchema::class) ||
-            $this->checkExpectedType($event, ObjectSchema::class) ||
-            $this->checkExpectedType($event, RefSchema::class) ||
-            $this->checkExpectedType($event, StringSchema::class)
+            $this->checkTypeParent($event, AbstractParameter::class) ||
+            $this->checkTypeParent($event, AbstractSchema::class) ||
+            $this->checkTypeParent($event, AbstractHeader::class)
         ) {
             $data = $event->getData();
             $data['vendorExtensions'] = [];
@@ -132,6 +124,16 @@ class VendorExtensionListener implements EventSubscriberInterface
     private function checkExpectedType(PreDeserializeEvent $event, $expectedType)
     {
         return $expectedType == $event->getType()['name'];
+    }
+
+    /**
+     * @param PreDeserializeEvent $event
+     * @param $parentClass
+     * @return bool
+     */
+    private function checkTypeParent(PreDeserializeEvent $event, $parentClass)
+    {
+        return is_subclass_of($event->getType()['name'], $parentClass);
     }
 
 }

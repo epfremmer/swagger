@@ -73,7 +73,7 @@ abstract class AbstractHeader
      *
      * @return string
      */
-    abstract public function getType(); //  parametry trzeba zrobić
+    abstract public function getType();
 
     /**
      * @return string
