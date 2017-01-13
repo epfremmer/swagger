@@ -91,6 +91,22 @@ class AbstractSchemaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Epfremme\Swagger\Entity\Path::AbstractSchema
+     * @covers Epfremme\Swagger\Entity\Path::AbstractSchema
+     */
+    public function testVendorExtension()
+    {
+        $this->assertClassHasAttribute('vendorExtensions', AbstractSchema::class);
+        $vendorExtensions = [
+            'x-foo' => '1',
+            'x-bar' => 'baz'
+        ];
+        $this->assertInstanceOf(AbstractSchema::class, $this->mockSchema->setVendorExtensions($vendorExtensions));
+        $this->assertAttributeEquals($vendorExtensions, 'vendorExtensions', $this->mockSchema);
+        $this->assertEquals($vendorExtensions, $this->mockSchema->getVendorExtensions());
+    }
+
+    /**
      * @covers Epfremme\Swagger\Entity\Schemas\AbstractSchema::getExternalDocs
      * @covers Epfremme\Swagger\Entity\Schemas\AbstractSchema::setExternalDocs
      */

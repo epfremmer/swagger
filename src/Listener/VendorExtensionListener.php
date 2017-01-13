@@ -13,6 +13,15 @@ use Epfremme\Swagger\Entity\License;
 use Epfremme\Swagger\Entity\Operation;
 use Epfremme\Swagger\Entity\Path;
 use Epfremme\Swagger\Entity\Response;
+use Epfremme\Swagger\Entity\Schemas\ArraySchema;
+use Epfremme\Swagger\Entity\Schemas\BooleanSchema;
+use Epfremme\Swagger\Entity\Schemas\IntegerSchema;
+use Epfremme\Swagger\Entity\Schemas\MultiSchema;
+use Epfremme\Swagger\Entity\Schemas\NullSchema;
+use Epfremme\Swagger\Entity\Schemas\NumberSchema;
+use Epfremme\Swagger\Entity\Schemas\ObjectSchema;
+use Epfremme\Swagger\Entity\Schemas\RefSchema;
+use Epfremme\Swagger\Entity\Schemas\StringSchema;
 use Epfremme\Swagger\Entity\SecurityDefinition;
 use Epfremme\Swagger\Entity\Tag;
 use JMS\Serializer\EventDispatcher\Events;
@@ -51,7 +60,16 @@ class VendorExtensionListener implements EventSubscriberInterface
             $this->checkExpectedType($event, IntegerHeader::class) ||
             $this->checkExpectedType($event, NumberHeader::class) ||
             $this->checkExpectedType($event, StringHeader::class) ||
-            $this->checkExpectedType($event, SecurityDefinition::class)
+            $this->checkExpectedType($event, SecurityDefinition::class) ||
+            $this->checkExpectedType($event, ArraySchema::class) ||
+            $this->checkExpectedType($event, BooleanSchema::class) ||
+            $this->checkExpectedType($event, IntegerSchema::class) ||
+            $this->checkExpectedType($event, MultiSchema::class) ||
+            $this->checkExpectedType($event, NullSchema::class) ||
+            $this->checkExpectedType($event, NumberSchema::class) ||
+            $this->checkExpectedType($event, ObjectSchema::class) ||
+            $this->checkExpectedType($event, RefSchema::class) ||
+            $this->checkExpectedType($event, StringSchema::class)
         ) {
             $data = $event->getData();
             $data['vendorExtensions'] = [];
