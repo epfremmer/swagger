@@ -2,6 +2,12 @@
 namespace Epfremme\Swagger\Listener;
 
 use Epfremme\Swagger\Entity\ExternalDocumentation;
+use Epfremme\Swagger\Entity\Headers\AbstractHeader;
+use Epfremme\Swagger\Entity\Headers\ArrayHeader;
+use Epfremme\Swagger\Entity\Headers\BooleanHeader;
+use Epfremme\Swagger\Entity\Headers\IntegerHeader;
+use Epfremme\Swagger\Entity\Headers\NumberHeader;
+use Epfremme\Swagger\Entity\Headers\StringHeader;
 use Epfremme\Swagger\Entity\Info;
 use Epfremme\Swagger\Entity\License;
 use Epfremme\Swagger\Entity\Operation;
@@ -37,7 +43,12 @@ class VendorExtensionListener implements EventSubscriberInterface
             $this->checkExpectedType($event, Operation::class) ||
             $this->checkExpectedType($event, Tag::class) ||
             $this->checkExpectedType($event, License::class) ||
-            $this->checkExpectedType($event, ExternalDocumentation::class)
+            $this->checkExpectedType($event, ExternalDocumentation::class) ||
+            $this->checkExpectedType($event, ArrayHeader::class) ||
+            $this->checkExpectedType($event, BooleanHeader::class) ||
+            $this->checkExpectedType($event, IntegerHeader::class) ||
+            $this->checkExpectedType($event, NumberHeader::class) ||
+            $this->checkExpectedType($event, StringHeader::class)
         ) {
             $data = $event->getData();
             $data['vendorExtensions'] = [];
