@@ -7,6 +7,7 @@
 namespace Epfremme\Swagger\Factory;
 
 use Epfremme\Swagger\Entity\Swagger;
+use Epfremme\Swagger\Listener\VendorExtensionListener;
 use Epfremme\Swagger\Parser\SwaggerParser;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\SerializationContext;
@@ -39,6 +40,7 @@ class SwaggerFactory
 
         $serializerBuilder->configureListeners(function (EventDispatcher $eventDispatcher) use ($subscribers) {
             $eventDispatcher->addSubscriber(new SerializationSubscriber());
+            $eventDispatcher->addSubscriber(new VendorExtensionListener());
             if (null !== $subscribers) {
                 foreach ($subscribers as $subscriber) {
                     $eventDispatcher->addSubscriber($subscriber);
