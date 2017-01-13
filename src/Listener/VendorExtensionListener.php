@@ -11,7 +11,9 @@ use Epfremme\Swagger\Entity\Headers\StringHeader;
 use Epfremme\Swagger\Entity\Info;
 use Epfremme\Swagger\Entity\License;
 use Epfremme\Swagger\Entity\Operation;
+use Epfremme\Swagger\Entity\Path;
 use Epfremme\Swagger\Entity\Response;
+use Epfremme\Swagger\Entity\SecurityDefinition;
 use Epfremme\Swagger\Entity\Tag;
 use JMS\Serializer\EventDispatcher\Events;
 use JMS\Serializer\EventDispatcher\EventSubscriberInterface;
@@ -48,7 +50,8 @@ class VendorExtensionListener implements EventSubscriberInterface
             $this->checkExpectedType($event, BooleanHeader::class) ||
             $this->checkExpectedType($event, IntegerHeader::class) ||
             $this->checkExpectedType($event, NumberHeader::class) ||
-            $this->checkExpectedType($event, StringHeader::class)
+            $this->checkExpectedType($event, StringHeader::class) ||
+            $this->checkExpectedType($event, SecurityDefinition::class)
         ) {
             $data = $event->getData();
             $data['vendorExtensions'] = [];
@@ -60,7 +63,7 @@ class VendorExtensionListener implements EventSubscriberInterface
             }
             $event->setData($data);
         }
-        if ($this->checkExpectedType($event, 'Epfremme\Swagger\Entity\Path')
+        if ($this->checkExpectedType($event, Path::class)
         ) {
             $outerData = $event->getData();
             $data = $outerData['data'];
