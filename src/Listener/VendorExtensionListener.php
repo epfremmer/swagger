@@ -72,7 +72,7 @@ class VendorExtensionListener implements EventSubscriberInterface
             $vendorExtensions = $object->getVendorExtensions();
             if ($vendorExtensions) {
                 foreach ($vendorExtensions as $key => $value) {
-                    $visitor->setData($key, $value);
+                    $visitor->addData($key, $value);
                 }
             }
         }

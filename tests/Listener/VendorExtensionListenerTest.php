@@ -166,7 +166,7 @@ class VendorExtensionListenerTest extends \PHPUnit_Framework_TestCase
         $visitorMock = $mockBuilder->getMock();
         $objectEventMock->method('getVisitor')->willReturn($visitorMock);
 
-        $visitorMock->expects($this->once())->method('setData')->with('x-foo', 'bar');
+        $visitorMock->expects($this->once())->method('addData')->with('x-foo', 'bar');
 
         $lister = new VendorExtensionListener();
 
@@ -187,7 +187,7 @@ class VendorExtensionListenerTest extends \PHPUnit_Framework_TestCase
         $visitorMock = $mockBuilder->getMock();
         $objectEventMock->method('getVisitor')->willReturn($visitorMock);
 
-        $visitorMock->expects($this->never())->method('setData');
+        $visitorMock->expects($this->never())->method('addData');
 
         $lister = new VendorExtensionListener();
 
