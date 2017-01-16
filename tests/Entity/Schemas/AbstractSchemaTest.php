@@ -89,11 +89,7 @@ class AbstractSchemaTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals('foo', 'example', $this->mockSchema);
         $this->assertEquals('foo', $this->mockSchema->getExample());
     }
-
-    /**
-     * @covers Epfremme\Swagger\Entity\Path::AbstractSchema
-     * @covers Epfremme\Swagger\Entity\Path::AbstractSchema
-     */
+phpu
     public function testVendorExtension()
     {
         $this->assertClassHasAttribute('vendorExtensions', AbstractSchema::class);

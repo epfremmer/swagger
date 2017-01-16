@@ -78,10 +78,6 @@ class AbstractParameterTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->mockParameter->isRequired());
     }
 
-    /**
-     * @covers Epfremme\Swagger\Entity\AbstractParameter::getVendorExtensions
-     * @covers Epfremme\Swagger\Entity\AbstractParameter::setVendorExtensions
-     */
     public function testVendorExtension()
     {
         $this->assertClassHasAttribute('vendorExtensions', AbstractParameter::class);
