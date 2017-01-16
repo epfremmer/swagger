@@ -27,7 +27,7 @@ trait VendorExtensionsTrait
     }
 
     /**
-     * This method exists to filter out this field when serializinggit st
+     * This method exists to filter out this field when serializing
      * @return null
      */
     public function getVendorExtensionNull()

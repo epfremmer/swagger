@@ -1,6 +1,7 @@
 <?php
 namespace Epfremme\Swagger\Tests\Listener;
 
+use Epfremme\Swagger\Entity\Contact;
 use Epfremme\Swagger\Entity\ExternalDocumentation;
 use Epfremme\Swagger\Entity\Headers\ArrayHeader;
 use Epfremme\Swagger\Entity\Headers\BooleanHeader;
@@ -24,7 +25,6 @@ use Epfremme\Swagger\Entity\Schemas\MultiSchema;
 use Epfremme\Swagger\Entity\Schemas\NullSchema;
 use Epfremme\Swagger\Entity\Schemas\NumberSchema;
 use Epfremme\Swagger\Entity\Schemas\ObjectSchema;
-use Epfremme\Swagger\Entity\Schemas\RefSchema;
 use Epfremme\Swagger\Entity\Schemas\StringSchema;
 use Epfremme\Swagger\Entity\SecurityDefinition;
 use Epfremme\Swagger\Entity\Tag;
@@ -33,6 +33,9 @@ use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\EventDispatcher\Events;
 use JMS\Serializer\EventDispatcher\ObjectEvent;
 use JMS\Serializer\EventDispatcher\PreDeserializeEvent;
+use JMS\Serializer\GenericSerializationVisitor;
+use JMS\Serializer\JsonSerializationVisitor;
+use JMS\Serializer\SerializationContext;
 
 
 /**
@@ -49,10 +52,13 @@ class VendorExtensionListenerTest extends \PHPUnit_Framework_TestCase
     {
         $events = VendorExtensionListener::getSubscribedEvents();
 
-        $this->assertEquals([
-            ['event' => Events::PRE_DESERIALIZE, 'method' => 'onDePreSerialize'],
-            ['event' => Events::POST_SERIALIZE, 'method' => 'onPostSerialize'],
-        ], $events);
+        $this->assertEquals(
+            [
+                ['event' => Events::PRE_DESERIALIZE, 'method' => 'onDePreSerialize'],
+                ['event' => Events::POST_SERIALIZE, 'method' => 'onPostSerialize'],
+            ],
+            $events
+        );
     }
 
     /**
@@ -139,5 +145,52 @@ class VendorExtensionListenerTest extends \PHPUnit_Framework_TestCase
             [\Epfremme\Swagger\Entity\Parameters\QueryParameter\NumberType::class],
             [\Epfremme\Swagger\Entity\Parameters\QueryParameter\StringType::class],
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function shouldAddDataOnPostSerialize()
+    {
+        $info = new Info();
+        $info->setVendorExtensions(
+            [
+                'x-foo' => 'bar'
+            ]
+        );
+        $mockBuilder = $this->getMockBuilder(ObjectEvent::class)->disableOriginalConstructor();
+        $objectEventMock = $mockBuilder->getMock();
+        $objectEventMock->method('getObject')->willReturn($info);
+
+        $mockBuilder = $this->getMockBuilder(GenericSerializationVisitor::class)->disableOriginalConstructor();
+        $visitorMock = $mockBuilder->getMock();
+        $objectEventMock->method('getVisitor')->willReturn($visitorMock);
+
+        $visitorMock->expects($this->once())->method('setData')->with('x-foo', 'bar');
+
+        $lister = new VendorExtensionListener();
+
+        $lister->onPostSerialize($objectEventMock);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotAddDataOnPostSerialize()
+    {
+        $info = new Contact();
+        $mockBuilder = $this->getMockBuilder(ObjectEvent::class)->disableOriginalConstructor();
+        $objectEventMock = $mockBuilder->getMock();
+        $objectEventMock->method('getObject')->willReturn($info);
+
+        $mockBuilder = $this->getMockBuilder(GenericSerializationVisitor::class)->disableOriginalConstructor();
+        $visitorMock = $mockBuilder->getMock();
+        $objectEventMock->method('getVisitor')->willReturn($visitorMock);
+
+        $visitorMock->expects($this->never())->method('setData');
+
+        $lister = new VendorExtensionListener();
+
+        $lister->onPostSerialize($objectEventMock);
     }
 }

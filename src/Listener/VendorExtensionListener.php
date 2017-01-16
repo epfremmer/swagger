@@ -79,7 +79,7 @@ class VendorExtensionListener implements EventSubscriberInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      * @return bool
      */
     private function isVendorExtensionField($key)
@@ -89,7 +89,7 @@ class VendorExtensionListener implements EventSubscriberInterface
 
     /**
      * @param PreDeserializeEvent $event
-     * @param $expectedType
+     * @param string $expectedType
      * @return bool
      */
     private function checkExpectedType(PreDeserializeEvent $event, $expectedType)
@@ -99,7 +99,7 @@ class VendorExtensionListener implements EventSubscriberInterface
 
     /**
      * @param PreDeserializeEvent $event
-     * @param $parentClass
+     * @param string $parentClass
      * @return bool
      */
     private function checkTypeParent(PreDeserializeEvent $event, $parentClass)
