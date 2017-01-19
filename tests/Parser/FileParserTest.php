@@ -58,7 +58,7 @@ class FileParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Epfremme\Swagger\Parser\SwaggerParser::__construct
+     * @covers Epfremme\Swagger\Parser\FileParser::__construct
      */
     public function testConstructJsonFile()
     {
@@ -69,7 +69,7 @@ class FileParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Epfremme\Swagger\Parser\SwaggerParser::__construct
+     * @covers Epfremme\Swagger\Parser\FileParser::__construct
      */
     public function testConstructYamlFile()
     {

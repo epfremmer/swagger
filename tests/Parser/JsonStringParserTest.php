@@ -19,6 +19,7 @@ class JsonStringParserTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * @covers Epfremme\Swagger\Parser\JsonStringParser::__construct
      * @test
      */
     public function shouldLoadValidJsonString()
@@ -42,6 +43,7 @@ class JsonStringParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Epfremme\Swagger\Parser\JsonStringParser::__construct
      * @test
      */
     public function shouldThrowExceptionOnInvalidData()
