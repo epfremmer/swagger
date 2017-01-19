@@ -7,6 +7,8 @@
 namespace Epfremme\Swagger\Factory;
 
 use Epfremme\Swagger\Entity\Swagger;
+use Epfremme\Swagger\Parser\FileParser;
+use Epfremme\Swagger\Parser\JsonStringParser;
 use Epfremme\Swagger\Parser\SwaggerParser;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\SerializationContext;
@@ -50,14 +52,22 @@ class SwaggerFactory
      */
     public function build($file)
     {
-        $swagger = new SwaggerParser($file);
-        $context = new DeserializationContext();
+        $swagger = new FileParser($file);
 
-        $context->setVersion(
-            $swagger->getVersion()
-        );
+        return $this->buildFromParser($swagger);
+    }
 
-        return $this->serializer->deserialize($swagger, Swagger::class, 'json', $context);
+    /**
+     * Build Swagger document from parser interface
+     *
+     * @param string $json
+     * @return Swagger
+     */
+    public function buildFromJsonString($json)
+    {
+        $swagger = new JsonStringParser($json);
+
+        return $this->buildFromParser($swagger);
     }
 
     /**
@@ -75,5 +85,21 @@ class SwaggerFactory
         );
 
         return $this->serializer->serialize($swagger, 'json', $context);
+    }
+
+    /**
+     * @param SwaggerParser $swagger
+     * @return array|\JMS\Serializer\scalar|object
+     * @throws \LogicException
+     */
+    private function buildFromParser(SwaggerParser $swagger)
+    {
+        $context = new DeserializationContext();
+
+        $context->setVersion(
+            $swagger->getVersion()
+        );
+
+        return $this->serializer->deserialize($swagger, Swagger::class, 'json', $context);
     }
 }
