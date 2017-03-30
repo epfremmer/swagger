@@ -47,7 +47,7 @@ class ArrayTypeTest extends \PHPUnit_Framework_TestCase
             'required'         => false,
             'format'           => 'baz',
             'allowEmptyValues' => true,
-            'default'          => false,
+            'default'          => [],
         ]);
 
         $parameter = $this->getSerializer()->deserialize($data, AbstractParameter::class, 'json');
@@ -60,7 +60,7 @@ class ArrayTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(false, 'required', $parameter);
         $this->assertAttributeEquals('baz', 'format', $parameter);
         $this->assertAttributeEquals(true, 'allowEmptyValues', $parameter);
-        $this->assertAttributeEquals(false, 'default', $parameter);
+        $this->assertAttributeEquals([], 'default', $parameter);
 
         $json = $this->getSerializer()->serialize($parameter, 'json');
 

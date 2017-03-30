@@ -8,6 +8,7 @@ namespace Epfremme\Swagger\Entity\Parameters\HeaderParameter;
 
 use Epfremme\Swagger\Entity\Mixin\Primitives;
 use Epfremme\Swagger\Entity\Parameters\AbstractTypedParameter;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class StringType
@@ -18,4 +19,10 @@ use Epfremme\Swagger\Entity\Parameters\AbstractTypedParameter;
 class StringType extends AbstractTypedParameter
 {
     use Primitives\StringPrimitiveTrait;
+
+    /**
+     * @JMS\Type("string")
+     * @var string
+     */
+    protected $default;
 }

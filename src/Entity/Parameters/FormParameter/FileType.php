@@ -6,8 +6,8 @@
  */
 namespace Epfremme\Swagger\Entity\Parameters\FormParameter;
 
-use Epfremme\Swagger\Entity\Mixin\Primitives;
 use Epfremme\Swagger\Entity\Parameters\AbstractTypedParameter;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class FileType
@@ -17,5 +17,9 @@ use Epfremme\Swagger\Entity\Parameters\AbstractTypedParameter;
  */
 class FileType extends AbstractTypedParameter
 {
-
+    /**
+     * @JMS\Type("string")
+     * @var string
+     */
+    protected $default;
 }

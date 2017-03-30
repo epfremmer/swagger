@@ -8,6 +8,7 @@ namespace Epfremme\Swagger\Entity\Parameters\QueryParameter;
 
 use Epfremme\Swagger\Entity\Mixin\Primitives;
 use Epfremme\Swagger\Entity\Parameters\AbstractTypedParameter;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class IntegerType
@@ -18,4 +19,10 @@ use Epfremme\Swagger\Entity\Parameters\AbstractTypedParameter;
 class IntegerType extends AbstractTypedParameter
 {
     use Primitives\NumericPrimitiveTrait;
+
+    /**
+     * @JMS\Type("integer")
+     * @var string
+     */
+    protected $default;
 }

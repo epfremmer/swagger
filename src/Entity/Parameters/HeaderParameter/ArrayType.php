@@ -8,6 +8,7 @@ namespace Epfremme\Swagger\Entity\Parameters\HeaderParameter;
 
 use Epfremme\Swagger\Entity\Mixin\Primitives;
 use Epfremme\Swagger\Entity\Parameters\AbstractTypedParameter;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class ArrayType
@@ -18,4 +19,10 @@ use Epfremme\Swagger\Entity\Parameters\AbstractTypedParameter;
 class ArrayType extends AbstractTypedParameter
 {
     use Primitives\ArrayPrimitiveTrait;
+
+    /**
+     * @JMS\Type("array")
+     * @var string
+     */
+    protected $default;
 }
