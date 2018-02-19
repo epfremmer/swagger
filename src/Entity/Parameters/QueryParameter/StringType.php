@@ -10,6 +10,7 @@ use Epfremme\Swagger\Entity\Mixin\Primitives;
 use Epfremme\Swagger\Entity\Parameters\AbstractTypedParameter;
 use Epfremme\Swagger\Type\QueryParameterInterface;
 use Epfremme\Swagger\Type\StringTypeInterface;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class StringType
@@ -20,4 +21,10 @@ use Epfremme\Swagger\Type\StringTypeInterface;
 class StringType extends AbstractTypedParameter implements QueryParameterInterface, StringTypeInterface
 {
     use Primitives\StringPrimitiveTrait;
+
+    /**
+     * @JMS\Type("string")
+     * @var string
+     */
+    protected $default;
 }

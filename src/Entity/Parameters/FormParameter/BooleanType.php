@@ -10,6 +10,7 @@ use Epfremme\Swagger\Entity\Mixin\Primitives;
 use Epfremme\Swagger\Entity\Parameters\AbstractTypedParameter;
 use Epfremme\Swagger\Type\BooleanTypeInterface;
 use Epfremme\Swagger\Type\FormParameterInterface;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class BooleanType
@@ -20,4 +21,10 @@ use Epfremme\Swagger\Type\FormParameterInterface;
 class BooleanType extends AbstractTypedParameter implements FormParameterInterface, BooleanTypeInterface
 {
     use Primitives\BooleanPrimitiveTrait;
+
+    /**
+     * @JMS\Type("boolean")
+     * @var boolean
+     */
+    protected $default;
 }

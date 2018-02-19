@@ -51,7 +51,6 @@ abstract class AbstractTypedParameter extends AbstractParameter
 
     /**
      * @JMS\Since("2.0")
-     * @JMS\Type("string")
      * @JMS\SerializedName("default")
      * @var string
      */

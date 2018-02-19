@@ -10,6 +10,7 @@ use Epfremme\Swagger\Entity\Mixin\Primitives;
 use Epfremme\Swagger\Entity\Parameters\AbstractTypedParameter;
 use Epfremme\Swagger\Type\NumericTypeInterface;
 use Epfremme\Swagger\Type\PathParameterInterface;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class IntegerType
@@ -20,4 +21,10 @@ use Epfremme\Swagger\Type\PathParameterInterface;
 class IntegerType extends AbstractTypedParameter implements PathParameterInterface, NumericTypeInterface
 {
     use Primitives\NumericPrimitiveTrait;
+
+    /**
+     * @JMS\Type("integer")
+     * @var integer
+     */
+    protected $default;
 }

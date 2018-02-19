@@ -10,6 +10,7 @@ use Epfremme\Swagger\Entity\Mixin\Primitives;
 use Epfremme\Swagger\Entity\Parameters\AbstractTypedParameter;
 use Epfremme\Swagger\Type\ArrayTypeInterface;
 use Epfremme\Swagger\Type\HeaderParameterInterface;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class ArrayType
@@ -20,4 +21,10 @@ use Epfremme\Swagger\Type\HeaderParameterInterface;
 class ArrayType extends AbstractTypedParameter implements HeaderParameterInterface, ArrayTypeInterface
 {
     use Primitives\ArrayPrimitiveTrait;
+
+    /**
+     * @JMS\Type("array")
+     * @var array
+     */
+    protected $default;
 }

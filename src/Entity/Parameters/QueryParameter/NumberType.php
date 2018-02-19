@@ -10,6 +10,7 @@ use Epfremme\Swagger\Entity\Mixin\Primitives;
 use Epfremme\Swagger\Entity\Parameters\AbstractTypedParameter;
 use Epfremme\Swagger\Type\NumericTypeInterface;
 use Epfremme\Swagger\Type\QueryParameterInterface;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class NumberType
@@ -20,4 +21,10 @@ use Epfremme\Swagger\Type\QueryParameterInterface;
 class NumberType extends AbstractTypedParameter implements QueryParameterInterface, NumericTypeInterface
 {
     use Primitives\NumericPrimitiveTrait;
+
+    /**
+     * @JMS\Type("double")
+     * @var double
+     */
+    protected $default;
 }
