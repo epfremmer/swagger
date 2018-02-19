@@ -8,6 +8,8 @@ namespace Epfremme\Swagger\Entity\Parameters\QueryParameter;
 
 use Epfremme\Swagger\Entity\Mixin\Primitives;
 use Epfremme\Swagger\Entity\Parameters\AbstractTypedParameter;
+use Epfremme\Swagger\Type\ArrayTypeInterface;
+use Epfremme\Swagger\Type\QueryParameterInterface;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -16,13 +18,13 @@ use JMS\Serializer\Annotation as JMS;
  * @package Epfremme\Swagger
  * @subpackage Entity\Parameters\QueryParameter
  */
-class ArrayType extends AbstractTypedParameter
+class ArrayType extends AbstractTypedParameter implements QueryParameterInterface, ArrayTypeInterface
 {
     use Primitives\ArrayPrimitiveTrait;
 
     /**
      * @JMS\Type("array")
-     * @var string
+     * @var array
      */
     protected $default;
 }
