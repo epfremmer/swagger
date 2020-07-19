@@ -20,17 +20,17 @@
     }
   },
   "require": {
-    "php": ">=5.5",
-    "jms/serializer": "^1.1",
-    "doctrine/collections": "^1.3",
-    "doctrine/annotations": "^1.2",
-    "symfony/yaml": "^2.7|^3.1",
-    "phpoption/phpoption": "^1.1"
+    "php": ">=7.3",
+    "jms/serializer": "~1.14",
+    "doctrine/collections": "^1.6",
+    "doctrine/annotations": "^1.10",
+    "symfony/yaml": "^5.1",
+    "phpoption/phpoption": "^1.7"
   },
   "require-dev": {
-    "phpunit/phpunit": "~4.8|~5.0",
-    "mockery/mockery": "^0.9.4",
-    "satooshi/php-coveralls": "^1.0"
+    "phpunit/phpunit": "~9.2.6",
+    "mockery/mockery": "^1.4.1",
+    "satooshi/php-coveralls": "^2.1"
   },
   "config": {
     "bin-dir": "bin"
